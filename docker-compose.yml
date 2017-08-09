@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  web:
+    image: wordpress:4.8.0-apache
+    dns: 8.8.8.8
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8080:80
+    environment:
+      DB_NAME: store
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_HOST: mysql
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - data-volume:/var/lib/mysql
+      - .:/usr/src/app
+
+volumes:
+  data-volume:
+
